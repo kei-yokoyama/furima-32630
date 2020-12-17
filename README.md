@@ -48,13 +48,12 @@
 | --------- | ---------- | ------------------------------ |
 | item      | references | null: false, foreign_key: true |
 | user      | references | null: false, foreign_key: true |
-| address   | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
 - belongs_to :item
-- belongs_to :address
+- has_one    :address
 
 
 ## addresses テーブル
@@ -67,7 +66,8 @@
 | address1      | string     | null: false                    |
 | address2      | string     |                                |
 | telephone     | string     | null: false                    |
+| purchase      | references | null: false, foreign_key: true |
 
 ### Association
 
-- has_one :purchase
+- belongs_to :purchase
