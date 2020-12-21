@@ -9,7 +9,7 @@ class Item < ApplicationRecord
     validates :prefecture
     validates :shipping_duration
     validates :shipping_payer
-    validates :price, numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: '(金額)を¥300 ~ 9,999,999 内にしてください' }, format: { with: /\A[0-9]+\z/, message: '(金額)を半角入力してください' }
+    validates :price, numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: '(金額)を¥300 ~ 9,999,999 内で半角数字入力してください' }, format: { with: /\A[0-9]+\z/ }
 
   end
 
