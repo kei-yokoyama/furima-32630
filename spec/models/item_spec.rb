@@ -97,8 +97,20 @@ RSpec.describe Item, type: :model do
           expect(@item.errors.full_messages).to include('Price (金額)を¥300 ~ 9,999,999 内で半角数字入力してください')
         end
 
-        it '価格が半角数字でないと保存できないこと' do
+        it '価格が全角数字では保存できないこと' do
           @item.price = '１００'
+          @item.valid?
+          expect(@item.errors.full_messages).to include('Price (金額)を¥300 ~ 9,999,999 内で半角数字入力してください')
+        end
+
+        it '価格が半角英数混合では保存できないこと' do
+          @item.price = '1000k'
+          @item.valid?
+          expect(@item.errors.full_messages).to include('Price (金額)を¥300 ~ 9,999,999 内で半角数字入力してください')
+        end
+
+        it '価格が半角英語では保存できないこと' do
+          @item.price = 'one thousand'
           @item.valid?
           expect(@item.errors.full_messages).to include('Price (金額)を¥300 ~ 9,999,999 内で半角数字入力してください')
         end
