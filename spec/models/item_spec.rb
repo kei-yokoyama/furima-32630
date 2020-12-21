@@ -49,34 +49,35 @@ RSpec.describe Item, type: :model do
           expect(@item.errors.full_messages).to include('Description 1000文字以内にしてください')
         end
 
-        it 'カテゴリーが空では保存できないこと' do
+        it 'カテゴリーを選択していないと保存できないこと' do
           @item.category = nil
           @item.valid?
-          expect(@item.errors.full_messages).to include("Category can't be blank")
+          expect(@item.errors.full_messages).to include("Category 選択していない項目があります")
         end
 
-        it '状態が空では保存できないこと' do
+        it '状態を選択していないと保存できないこと' do
           @item.condition = nil
           @item.valid?
-          expect(@item.errors.full_messages).to include("Condition can't be blank")
+          expect(@item.errors.full_messages).to include("Condition 選択していない項目があります")
         end
 
-        it '配送料負担者が空では保存できないこと' do
+        it '配送料負担者を選択していないと保存できないこと' do
           @item.shipping_payer = nil
           @item.valid?
-          expect(@item.errors.full_messages).to include("Shipping payer can't be blank")
+          expect(@item.errors.full_messages).to include("Shipping payer 選択していない項目があります")
         end
 
-        it '配送元地域が空では保存できないこと' do
+
+        it '配送元地域を選択していないと保存できないこと' do
           @item.prefecture = nil
           @item.valid?
-          expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+          expect(@item.errors.full_messages).to include("Prefecture 選択していない項目があります")
         end
 
-        it '配送元日数が空では保存できないこと' do
+        it '配送元日数を選択していないと保存できないこと' do
           @item.shipping_duration = nil
           @item.valid?
-          expect(@item.errors.full_messages).to include("Shipping duration can't be blank")
+          expect(@item.errors.full_messages).to include("Shipping duration 選択していない項目があります")
         end
 
         it '価格が空では保存できないこと' do
