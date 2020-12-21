@@ -18,5 +18,5 @@ class User < ApplicationRecord
     validates :birthday
   end
 
-  has_many :item
+  has_many :items
 end
