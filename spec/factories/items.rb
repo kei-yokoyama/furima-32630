@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :item do
-    
     name                    { Faker::Name.initials(number: 2) }
     description             { Faker::Name.initials(number: 2) }
     category_id             { '2' }
