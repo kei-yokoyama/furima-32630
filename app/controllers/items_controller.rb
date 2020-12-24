@@ -21,11 +21,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
-
     if @item.update(items_params)
       redirect_to root_path
     else
@@ -37,11 +35,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-
   end
 
   private
-
 
   def move_to_log_in
     redirect_to new_user_session_path unless user_signed_in?
@@ -60,5 +56,4 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find(params[:id])
   end
-
 end
