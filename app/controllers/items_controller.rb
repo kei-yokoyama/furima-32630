@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :move_to_log_in, except: [:index, :show]
+  before_action :move_to_root_path, only: [:edit]
 
   def index
     @items = Item.all.includes(:user).order('created_at DESC')
@@ -19,9 +20,16 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item = Item.find(params[:id])
   end
 
   def update
+      @item = Item.find(params[:id])
+      if @item.update(items_params)
+      redirect_to root_path
+      else
+      render :edit
+      end
   end
 
   def destroy
@@ -34,7 +42,18 @@ class ItemsController < ApplicationController
   private
 
   def move_to_log_in
-    redirect_to new_user_session_path unless user_signed_in?
+    unless user_signed_in?
+    redirect_to new_user_session_path 
+    end
+  end
+
+  def move_to_root_path
+    if current_user.id != Item.find(params[:id]).user_id
+      redirect_to root_path 
+    end
+    if Item.find(params[:id]).purchase.present?
+      redirect_to root_path 
+    end
   end
 
   def items_params
