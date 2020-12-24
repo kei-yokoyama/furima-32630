@@ -24,12 +24,12 @@ class ItemsController < ApplicationController
   end
 
   def update
-      @item = Item.find(params[:id])
-      if @item.update(items_params)
+    @item = Item.find(params[:id])
+    if @item.update(items_params)
       redirect_to root_path
-      else
+    else
       render :edit
-      end
+    end
   end
 
   def destroy
@@ -42,18 +42,12 @@ class ItemsController < ApplicationController
   private
 
   def move_to_log_in
-    unless user_signed_in?
-    redirect_to new_user_session_path 
-    end
+    redirect_to new_user_session_path unless user_signed_in?
   end
 
   def move_to_root_path
-    if current_user.id != Item.find(params[:id]).user_id
-      redirect_to root_path 
-    end
-    if Item.find(params[:id]).purchase.present?
-      redirect_to root_path 
-    end
+    redirect_to root_path if current_user.id != Item.find(params[:id]).user_id
+    redirect_to root_path if Item.find(params[:id]).purchase.present?
   end
 
   def items_params
