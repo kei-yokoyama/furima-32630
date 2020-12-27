@@ -1,6 +1,6 @@
 class PurchaseAddress
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :address1, :address2, :telephone
+  attr_accessor :user_id, :item_id, :token, :postal_code, :prefecture_id, :city, :address1, :address2, :telephone
 
   # バリデーション
   with_options presence: true do
@@ -12,6 +12,7 @@ class PurchaseAddress
     validates :telephone
     validates :user_id
     validates :item_id
+    validates :token, presence: { message: 'クレジットカード情報が間違っています' }
   end
 
   # 各テーブのデータ保存処理

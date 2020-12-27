@@ -8,22 +8,28 @@ RSpec.describe PurchaseAddress, type: :model do
 
     describe '商品購入機能' do
       context '購入がうまくいくとき' do
-        it 'user、itemがpurchaseにひも付き、postal_code,prefecture_id,city,address1,telephoneが存在すれば購入' do
+        it 'user_id、item_id、token,postal_code,prefecture_id,city,address1,telephoneが存在すれば購入' do
           expect(@purchase_address).to be_valid
         end
       end
 
       context '購入がうまくいかないとき' do
-        it 'userがpurchaseに紐付いていない' do
+        it 'user_idが空' do
           @purchase_address.user_id = nil
           @purchase_address.valid?
-          expect(@purchase_address.errors.full_messages).to include('Purchase must exist')
+          expect(@purchase_address.errors.full_messages).to include("User can't be blank")
         end
 
-        it 'itemがpurchaseに紐付いていない' do
+        it 'item_idが空' do
           @purchase_address.item_id = nil
           @purchase_address.valid?
           expect(@purchase_address.errors.full_messages).to include("Item can't be blank")
+        end
+
+        it 'tokenが空' do
+          @purchase_address.token = nil
+          @purchase_address.valid?
+          expect(@purchase_address.errors.full_messages).to include('Token クレジットカード情報が間違っています')
         end
 
         it 'postal_codeが空' do
