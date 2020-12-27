@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Address, type: :model do
   describe Address do
     before do

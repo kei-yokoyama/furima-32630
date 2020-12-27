@@ -11,6 +11,11 @@ RSpec.describe PurchaseAddress, type: :model do
         it 'user_id,item_id,token(クレジットカード情報),postal_code,prefecture_id,city,address1,telephoneが存在すれば購入' do
           expect(@purchase_address).to be_valid
         end
+
+        it '建物名が空でも購入できること' do
+          @purchase_address.address2 = nil
+          expect(@purchase_address).to be_valid
+        end
       end
 
       context '購入がうまくいかないとき' do
@@ -51,9 +56,9 @@ RSpec.describe PurchaseAddress, type: :model do
         end
 
         it 'prefectureが空' do
-          @purchase_address.prefecture_id = nil
+          @purchase_address.prefecture_id = 1
           @purchase_address.valid?
-          expect(@purchase_address.errors.full_messages).to include("Prefecture can't be blank", 'Prefecture 選択していない項目があります')
+          expect(@purchase_address.errors.full_messages).to include('Prefecture 選択していない項目があります')
         end
 
         it 'cityが空' do
