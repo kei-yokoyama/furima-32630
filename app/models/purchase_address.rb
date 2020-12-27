@@ -4,12 +4,12 @@ class PurchaseAddress
 
   # バリデーション
   with_options presence: true do
-    validates :postal_code
+    validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: '郵便番号をハイフン込みで半角数字入力してください' }
     validates :prefecture_id, numericality: { other_than: 1, message: '選択していない項目があります' }
     validates :city
     validates :address1
-    validates :city
-    validates :telephone
+    validates :telephone, length: { maximum: 11, message: '電話番号を半角数字のみ(ハイフン無し)11桁以内で入力してください' },
+                          format: { with: /\A[0-9]+\z/, message: '電話番号を半角数字のみ(ハイフン無し)11桁以内で入力してください' }
     validates :user_id
     validates :item_id
     validates :token, presence: { message: 'クレジットカード情報が間違っています' }

@@ -8,7 +8,7 @@ RSpec.describe PurchaseAddress, type: :model do
 
     describe '商品購入機能' do
       context '購入がうまくいくとき' do
-        it 'user_id、item_id、token,postal_code,prefecture_id,city,address1,telephoneが存在すれば購入' do
+        it 'user_id,item_id,token(クレジットカード情報),postal_code,prefecture_id,city,address1,telephoneが存在すれば購入' do
           expect(@purchase_address).to be_valid
         end
       end
@@ -26,7 +26,7 @@ RSpec.describe PurchaseAddress, type: :model do
           expect(@purchase_address.errors.full_messages).to include("Item can't be blank")
         end
 
-        it 'tokenが空' do
+        it 'token(クレジットカード情報)が空' do
           @purchase_address.token = nil
           @purchase_address.valid?
           expect(@purchase_address.errors.full_messages).to include('Token クレジットカード情報が間違っています')
@@ -36,6 +36,18 @@ RSpec.describe PurchaseAddress, type: :model do
           @purchase_address.postal_code = nil
           @purchase_address.valid?
           expect(@purchase_address.errors.full_messages).to include("Postal code can't be blank")
+        end
+
+        it 'postal_codeがハイフン無し' do
+          @purchase_address.postal_code = '1234567'
+          @purchase_address.valid?
+          expect(@purchase_address.errors.full_messages).to include('Postal code 郵便番号をハイフン込みで半角数字入力してください')
+        end
+
+        it 'postal_codeに全角数字が含まれている' do
+          @purchase_address.postal_code = '１２３-４５６７'
+          @purchase_address.valid?
+          expect(@purchase_address.errors.full_messages).to include('Postal code 郵便番号をハイフン込みで半角数字入力してください')
         end
 
         it 'prefectureが空' do
@@ -60,6 +72,24 @@ RSpec.describe PurchaseAddress, type: :model do
           @purchase_address.telephone = nil
           @purchase_address.valid?
           expect(@purchase_address.errors.full_messages).to include("Telephone can't be blank")
+        end
+
+        it 'telephone番号に半角数字以外(ハイフンなど)が含まれている' do
+          @purchase_address.telephone = '000-1234-5678'
+          @purchase_address.valid?
+          expect(@purchase_address.errors.full_messages).to include('Telephone 電話番号を半角数字のみ(ハイフン無し)11桁以内で入力してください')
+        end
+
+        it 'telephone番号に全角数字が含まれている' do
+          @purchase_address.telephone = '０００１２３４５６７８'
+          @purchase_address.valid?
+          expect(@purchase_address.errors.full_messages).to include('Telephone 電話番号を半角数字のみ(ハイフン無し)11桁以内で入力してください')
+        end
+
+        it 'telephone番号が11桁を超えている' do
+          @purchase_address.telephone = '000123456789'
+          @purchase_address.valid?
+          expect(@purchase_address.errors.full_messages).to include('Telephone 電話番号を半角数字のみ(ハイフン無し)11桁以内で入力してください')
         end
       end
     end
