@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   devise_for :users 
   
     resources :items do
-      resources :purchases
+      resources :purchases 
+      resources :orders
     end
+
 
 
 
