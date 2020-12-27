@@ -7,6 +7,10 @@ class ItemsController < ApplicationController
     @items = Item.all.includes(:user).order('created_at DESC')
   end
 
+  def new
+    @item = Item.new
+  end
+
   def create
     @item = Item.new(items_params)
     if @item.save

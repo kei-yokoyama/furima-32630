@@ -7,10 +7,6 @@ class OrdersController < ApplicationController
     @purchase_address = PurchaseAddress.new
   end
 
-  def new
-    @purchase_address = PurchaseAddress.new(purchase_address_params)
-  end
-
   def create
     @purchase_address = PurchaseAddress.new(purchase_address_params)
     if @purchase_address.valid?
