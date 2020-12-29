@@ -45,4 +45,10 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  #OrderDestinationモデルの単体(RSPEC)で発生するエラーの対応策
+  #エラー内容:Mysql2::Error::ConnectionError: Lost connection to MySQL server during query
+  #問題点：画像の保存が容量多く、DBのコネクションのキャパを超えている。そのためコネクションを超えた処理である非同期で画像保存する前に次のテストに入ってしまう。
+  #以下のコードでひとつひとつ処理（重い画像の保存も）が完全に終わって次のテスト処理を行うようにする。
+  config.active_job.queue_adapter = :inline
 end
