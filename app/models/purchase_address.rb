@@ -18,7 +18,6 @@ class PurchaseAddress
   # 各テーブのデータ保存処理
   def save
     # 購入の情報を保存
-    # user_id = current_user.id
     purchase = Purchase.create(user_id: user_id, item_id: item_id)
     # 住所情報を保存
     Address.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, address1: address1, address2: address2,
